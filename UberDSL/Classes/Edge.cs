@@ -74,59 +74,63 @@ namespace UberDSL
         {
             return lhs.Divide(rhs);
         }
+
+        public static Expression<IMultiplication> operator /(nfloat lhs, Edge rhs)
+        {
+            return rhs / lhs;
+        }
         #endregion
 
         #region IRelativeEquality Operators
-        public NSLayoutConstraint Equal(LayoutSupport support)
+        public LayoutConstraint Equal(LayoutSupport support)
         {
             return Context.AddConstraint(this, to: support);
         }
 
-        public NSLayoutConstraint Equal(IRelativeEquality equality)
+        public LayoutConstraint Equal(IRelativeEquality equality)
         {
             return Context.AddConstraint(this, to: equality);
         }
 
-        public NSLayoutConstraint Equal(Expression<IAddition> expression)
+        public LayoutConstraint Equal(Expression<LayoutSupport> expression)
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients?[0]);
         }
 
-        public NSLayoutConstraint Equal(Expression<LayoutSupport> expression)
+        public LayoutConstraint Equal<T>(Expression<T> expression) where T : IRelativeEquality
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients?[0]);
         }
 
-
-        public NSLayoutConstraint LessThanOrEqualTo(LayoutSupport support)
+        public LayoutConstraint LessThanOrEqualTo(LayoutSupport support)
         {
             return Context.AddConstraint(this, to: support, relation: NSLayoutRelation.LessThanOrEqual);
         }
 
-        public NSLayoutConstraint LessThanOrEqualTo(Expression<LayoutSupport> expression)
+        public LayoutConstraint LessThanOrEqualTo(Expression<LayoutSupport> expression)
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients?[0], relation: NSLayoutRelation.LessThanOrEqual);
         }
 
 
-        public NSLayoutConstraint GreaterThanOrEqualTo(LayoutSupport support)
+        public LayoutConstraint GreaterThanOrEqualTo(LayoutSupport support)
         {
             return Context.AddConstraint(this, to: support, relation: NSLayoutRelation.GreaterThanOrEqual);
         }
 
-        public NSLayoutConstraint GreaterThanOrEqualTo(Expression<LayoutSupport> expression)
+        public LayoutConstraint GreaterThanOrEqualTo(Expression<LayoutSupport> expression)
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients?[0], relation: NSLayoutRelation.GreaterThanOrEqual);
         }
         #endregion
 
         #region IRelativeInequality Operators
-        public NSLayoutConstraint LessThanOrEqualTo(IRelativeInequality inequality)
+        public LayoutConstraint LessThanOrEqualTo(IRelativeInequality inequality)
         {
             return Context.AddConstraint(this, to: inequality, relation: NSLayoutRelation.LessThanOrEqual);
         }
 
-        public NSLayoutConstraint GreaterThanOrEqualTo(IRelativeInequality inequality)
+        public LayoutConstraint GreaterThanOrEqualTo(IRelativeInequality inequality)
         {
             return Context.AddConstraint(this, to: inequality, relation: NSLayoutRelation.GreaterThanOrEqual);
         }

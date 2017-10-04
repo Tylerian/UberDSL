@@ -16,34 +16,34 @@ namespace UberDSL
         }
 
         #region IRelativeCompoundEquality Operators
-        public NSLayoutConstraint[] Equal(IRelativeCompoundEquality compound)
+        public LayoutConstraint[] Equal(IRelativeCompoundEquality compound)
         {
             return Context.AddConstraint(this, to: compound);
         }
 
-        public NSLayoutConstraint[] Equal(Expression<IRelativeCompoundEquality> expression)
+        public LayoutConstraint[] Equal<T>(Expression<T> expression) where T : IRelativeCompoundEquality
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients);
         }
         #endregion
 
         #region IRelativeCompoundInequality Operators
-        public NSLayoutConstraint[] LessThanOrEqualTo(IRelativeCompoundInequality compound)
+        public LayoutConstraint[] LessThanOrEqualTo(IRelativeCompoundInequality compound)
         {
             return Context.AddConstraint(this, to: compound, relation: NSLayoutRelation.LessThanOrEqual);
         }
 
-        public NSLayoutConstraint[] GreaterThanOrEqualTo(IRelativeCompoundInequality compound)
+        public LayoutConstraint[] GreaterThanOrEqualTo(IRelativeCompoundInequality compound)
         {
             return Context.AddConstraint(this, to: compound, relation: NSLayoutRelation.GreaterThanOrEqual);
         }
 
-        public NSLayoutConstraint[] LessThanOrEqualTo(Expression<IRelativeCompoundInequality> expression)
+        public LayoutConstraint[] LessThanOrEqualTo<T>(Expression<T> expression) where T : IRelativeCompoundInequality
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients, relation: NSLayoutRelation.LessThanOrEqual);
         }
 
-        public NSLayoutConstraint[] GreaterThanOrEqualTo(Expression<IRelativeCompoundInequality> expression)
+        public LayoutConstraint[] GreaterThanOrEqualTo<T>(Expression<T> expression) where T : IRelativeCompoundInequality
         {
             return Context.AddConstraint(this, to: expression.Value, coefficients: expression.Coefficients, relation: NSLayoutRelation.GreaterThanOrEqual);
         }

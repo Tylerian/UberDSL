@@ -7,7 +7,7 @@ namespace UberDSL
     {
         private Constraint[] _constraints;
 
-        internal bool Active
+        public /*internal*/ bool Active
         {
             get
             {

@@ -18,9 +18,9 @@ namespace UberDSL
                 combined[i] = instance[i];
             }
 
-            for (var i = instance.Length; i < combined.Length; i++)
+            for (int i = 0, j = instance.Length; i < another.Length; i++, j++)
             {
-                combined[i] = another[i];
+                combined[j] = another[i];
             }
 
             return combined;

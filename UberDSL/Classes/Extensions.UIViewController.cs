@@ -6,12 +6,12 @@ namespace UberDSL
     {
         public static LayoutSupport TopLayoutGuideCartography(this UIViewController instance)
         {
-            return new LayoutSupport(instance.TopLayoutGuide as UILayoutSupport, NSLayoutAttribute.Top);
+            return new LayoutSupport(instance.TopLayoutGuide, NSLayoutAttribute.Top);
         }
 
         public static LayoutSupport BottomLayoutGuideCartography(this UIViewController instance)
         {
-            return new LayoutSupport(instance.TopLayoutGuide as UILayoutSupport, NSLayoutAttribute.Bottom);
+            return new LayoutSupport(instance.TopLayoutGuide, NSLayoutAttribute.Bottom);
         }
     }
 }

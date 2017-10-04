@@ -22,7 +22,7 @@ namespace UberDSL
             _constraints = new List<Constraint>();
         }
 
-        internal NSLayoutConstraint AddConstraint(IProperty from, LayoutSupport to, Coefficients coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
+        internal LayoutConstraint AddConstraint(IProperty from, LayoutSupport to, Coefficients coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
         {
             if (coefficients == null)
             {
@@ -53,7 +53,7 @@ namespace UberDSL
             return constraint;
         }
 
-        internal NSLayoutConstraint AddConstraint(IProperty from, IProperty to = null, Coefficients coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
+        internal LayoutConstraint AddConstraint(IProperty from, IProperty to = null, Coefficients coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
         {
             if (coefficients == null)
             {
@@ -79,7 +79,7 @@ namespace UberDSL
 
             else
             {
-                var common = Extensions.ClosestCommonAncestror(from.View, to.View);
+                var common = from.View.ClosestCommonAncestor(to.View);
 
                 if (common != null)
                 {
@@ -88,21 +88,16 @@ namespace UberDSL
 
                 else
                 {
-                    Console.WriteLine($"No common superview found between ${from.View} and ${to.View}");
+                    throw new Exception($"No common superview found between ${from.View} and ${to.View}");
                 }
             }
 
             return constraint;
         }
 
-        internal NSLayoutConstraint[] AddConstraint(ICompound from, ICompound to = null, Coefficients[] coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
+        internal LayoutConstraint[] AddConstraint(ICompound from, ICompound to = null, Coefficients[] coefficients = null, NSLayoutRelation relation = default(NSLayoutRelation))
         {
-            if (coefficients == null)
-            {
-                coefficients = new Coefficients[0];
-            }
-
-            var results = new List<NSLayoutConstraint>();
+            var results = new List<LayoutConstraint>();
 
             for (var i = 0; i < from.Properties.Length; i++)
             {

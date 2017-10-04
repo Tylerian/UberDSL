@@ -103,7 +103,7 @@ namespace UberDSL
         {
             var  first = (LayoutProxy)null;
 
-            if ((first = elements?[0]) != null)
+            if ((first = elements?.FirstOrDefault()) != null)
             {
                 first.View.TranslatesAutoresizingMaskIntoConstraints = false;
 
@@ -111,7 +111,7 @@ namespace UberDSL
 
                 return rest.Select(x => {
                     x.View.TranslatesAutoresizingMaskIntoConstraints = false;
-                    return attribute(first).Equal(attribute(x));
+                    return (NSLayoutConstraint) attribute(first).Equal(attribute(x));
                 }).ToArray();
             }
 
@@ -229,6 +229,33 @@ namespace UberDSL
         }
         #endregion
 
+        #region Inset Methods
+        public static Expression<Edges> Inset(Edges edges, nfloat all)
+        {
+            return Inset(edges, all, all, all, all);
+        }
+
+        public static Expression<Edges> Inset(Edges edges, UIEdgeInsets insets)
+        {
+            return Inset(edges, insets.Top, insets.Left, insets.Bottom, insets.Right);
+        }
+
+        public static Expression<Edges> Inset(Edges edges, nfloat horizontal, nfloat vertical)
+        {
+            return Inset(edges, vertical, horizontal, vertical, horizontal);
+        }
+
+        public static Expression<Edges> Inset(Edges edges, nfloat top, nfloat leading, nfloat bottom, nfloat trailing)
+        {
+            return new Expression<Edges>(edges, new[] {
+                new Coefficients(1, top),
+                new Coefficients(1, leading),
+                new Coefficients(1, -bottom),
+                new Coefficients(1, -trailing)
+            });
+        }
+        #endregion
+
         #region Distribute Methods
         public static NSLayoutConstraint[] DistributeVertically(LayoutProxy[] views, nfloat amount = default(nfloat))
         {
@@ -237,7 +264,7 @@ namespace UberDSL
 
         public static NSLayoutConstraint[] DistributeLeftToRight(LayoutProxy[] views, nfloat amount = default(nfloat))
         {
-            return Reduce(views, (x, y) => x.Right.Equal(y.Left - 20));
+            return Reduce(views, (x, y) => x.Right.Equal(y.Left - amount));
         }
 
         public static NSLayoutConstraint[] DistributeHorizontally(LayoutProxy[] views, nfloat amount = default(nfloat))
@@ -247,23 +274,23 @@ namespace UberDSL
 
         public static NSLayoutConstraint[] DistributeVertically(LayoutProxy first, nfloat amount = default(nfloat), params LayoutProxy[] rest)
         {
-            return DistributeVertically(new[] { first }.Merge(rest));
+            return DistributeVertically(new[] { first }.Merge(rest), amount);
         }
 
         public static NSLayoutConstraint[] DistributeLeftToRight(LayoutProxy first, nfloat amount = default(nfloat), params LayoutProxy[] rest)
         {
-            return DistributeLeftToRight(new[] { first }.Merge(rest));
+            return DistributeLeftToRight(new[] { first }.Merge(rest), amount);
         }
 
         public static NSLayoutConstraint[] DistributeHorizontally(LayoutProxy first, nfloat amount = default(nfloat), params LayoutProxy[] rest)
         {
-            return DistributeHorizontally(new[] { first }.Merge(rest));
+            return DistributeHorizontally(new[] { first }.Merge(rest), amount);
         }
 
         private static NSLayoutConstraint[] Reduce(LayoutProxy[] elements, Func<LayoutProxy, LayoutProxy, NSLayoutConstraint> closure)
         {
-            var lastElement  = elements.Last();
-            var firstElement = elements.First();
+            var lastElement  = elements.LastOrDefault();
+            var firstElement = elements.FirstOrDefault();
 
             if (lastElement != null)
             {

@@ -12,19 +12,19 @@ namespace UberDSL
 
     public interface IRelativeCompoundEquality : ICompound
     {
-        NSLayoutConstraint[] Equal(IRelativeCompoundEquality compound);
+        LayoutConstraint[] Equal(IRelativeCompoundEquality compound);
 
-        NSLayoutConstraint[] Equal(Expression<IRelativeCompoundEquality> expression);
+        LayoutConstraint[] Equal<T>(Expression<T> expression) where T : IRelativeCompoundEquality;
     }
 
     public interface IRelativeCompoundInequality : ICompound
     {
-        NSLayoutConstraint[] LessThanOrEqualTo(IRelativeCompoundInequality compound);
+        LayoutConstraint[] LessThanOrEqualTo(IRelativeCompoundInequality compound);
 
-        NSLayoutConstraint[] GreaterThanOrEqualTo(IRelativeCompoundInequality compound);
+        LayoutConstraint[] GreaterThanOrEqualTo(IRelativeCompoundInequality compound);
 
-        NSLayoutConstraint[] LessThanOrEqualTo(Expression<IRelativeCompoundInequality> expression);
+        LayoutConstraint[] LessThanOrEqualTo<T>(Expression<T> expression) where T : IRelativeCompoundInequality;
 
-        NSLayoutConstraint[] GreaterThanOrEqualTo(Expression<IRelativeCompoundInequality> expression);
+        LayoutConstraint[] GreaterThanOrEqualTo<T>(Expression<T> expression) where T : IRelativeCompoundInequality;
     }
 }

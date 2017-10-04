@@ -49,6 +49,28 @@ namespace UberDSL
             }
         }
 
+        /// <summary>
+        /// Try to make a new API. Spec:
+        /// Constrain(view, (v) => {
+        ///   v.TopV2 = v.Superview.TopV2;
+        ///   insteadof
+        ///   v.TopV2.Equal(v.Superview.TopV2);
+        /// });
+        /// </summary>
+        /// <value>The top v2.</value>
+        public Edge TopV2
+        {
+            get
+            {
+                return new Edge(Context, View, NSLayoutAttribute.Top);
+            }
+
+            set
+            {
+                Context.AddConstraint(Top, value);
+            }
+        }
+
         public Edge Left
         {
             get
@@ -78,7 +100,7 @@ namespace UberDSL
             get
             {
                 return new Edges(Context, new[] {
-                    Bottom,
+                    Top,
                     Leading,
                     Bottom,
                     Trailing
@@ -153,7 +175,7 @@ namespace UberDSL
             }
         }
 
-        public Edges EdgesWithMargins
+        public Edges EdgesWithinMargins
         {
             get
             {
@@ -245,9 +267,11 @@ namespace UberDSL
         {
             get
             {
-                if (View?.Superview != null)
+                if (View.Superview != null)
                 {
-                    return new LayoutProxy(Context, View.Superview);
+                    return new LayoutProxy(
+                        Context, View.Superview
+                    );
                 }
 
                 return null;
@@ -256,7 +280,7 @@ namespace UberDSL
 
         public LayoutProxy(Context context, UIView view)
         {
-            View = view;
+            View    = view;
             Context = context;
         }
     }

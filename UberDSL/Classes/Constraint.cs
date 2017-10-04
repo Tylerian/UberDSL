@@ -22,7 +22,7 @@ namespace UberDSL
         internal Constraint(UIView view, NSLayoutConstraint layoutConstraint)
         {
             View = view;
-            LayoutConstraint = LayoutConstraint;
+            LayoutConstraint = layoutConstraint;
         }
     }
 }

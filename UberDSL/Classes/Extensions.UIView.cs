@@ -1,25 +1,26 @@
 ﻿using UIKit;
 using System.Collections.Generic;
+using System;
 
 namespace UberDSL
 {
     public static partial class Extensions
     {
-        internal static List<UIView> Ancestrors(this UIView view)
+        internal static List<UIView> Ancestors(this UIView view)
         {
-            var superview = view?.Superview;
-            var ancestrors = new List<UIView>();
+            var ancestors = new List<UIView>();
+            var superview = view?.Superview ?? view;
 
             while (superview != null)
             {
-                ancestrors.Add(superview);
+                ancestors.Add(superview);
                 superview = superview.Superview;
             }
 
-            return ancestrors;
+            return ancestors;
         }
 
-        internal static UIView ClosestCommonAncestror(UIView a, UIView b)
+        internal static UIView ClosestCommonAncestor(this UIView a, UIView b)
         {
             var aSuper = a.Superview;
             var bSuper = b.Superview;
@@ -29,13 +30,14 @@ namespace UberDSL
             if (ReferenceEquals(b, aSuper)) return b;
             if (ReferenceEquals(aSuper, bSuper)) return aSuper;
 
-            var ancestrorsOfA = a.Ancestrors();
+            var ancestorsOfA = a.Ancestors();
+            var ancestorsOfB = b.Ancestors();
 
-            foreach (var ancestror in b.Ancestrors())
+            foreach (var ancestor in ancestorsOfB)
             {
-                if (ancestrorsOfA.Contains(ancestror))
+                if (ancestorsOfA.Contains(ancestor))
                 {
-                    return ancestror;
+                    return ancestor;
                 }
             }
 

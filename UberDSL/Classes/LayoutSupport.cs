@@ -6,13 +6,13 @@ namespace UberDSL
 {
     public class LayoutSupport
     {
-        public UILayoutSupport LayoutGuide { get; }
-        public NSLayoutAttribute Attribute { get; }
+        public IUILayoutSupport  LayoutGuide { get; }
+        public NSLayoutAttribute Attribute   { get; }
 
-        public LayoutSupport(UILayoutSupport layoutGuide, NSLayoutAttribute layoutAttribute)
+        public LayoutSupport(IUILayoutSupport layoutGuide, NSLayoutAttribute layoutAttribute)
         {
             LayoutGuide = layoutGuide;
-            Attribute = layoutAttribute;
+            Attribute   = layoutAttribute;
         }
 
         public static Expression<LayoutSupport> operator +(LayoutSupport lhs, nfloat c)

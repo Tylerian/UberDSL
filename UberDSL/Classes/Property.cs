@@ -11,14 +11,16 @@ namespace UberDSL
         NSLayoutAttribute Attribute { get; }
     }
 
-    public interface IAddition : IProperty
+    public interface IAddition : IProperty, IRelativeEquality
     {
         Expression<IAddition> Add(nfloat c);
         Expression<IAddition> Substract(nfloat c);
+
+      //Expression<IAddition> Add<T>(Expression<T> expression) where T : IAddition;
     }
 
 
-    public interface IMultiplication : IProperty
+    public interface IMultiplication : IProperty, IRelativeEquality
     {
         Expression<IMultiplication> Divide(nfloat m);
         Expression<IMultiplication> Multiply(nfloat m);
@@ -26,31 +28,32 @@ namespace UberDSL
 
     public interface IRelativeEquality : IProperty
     {
-        NSLayoutConstraint Equal(LayoutSupport support);
-        NSLayoutConstraint Equal(IRelativeEquality equality);
-        NSLayoutConstraint Equal(Expression<LayoutSupport> expression);
+        LayoutConstraint Equal(LayoutSupport support);
+        LayoutConstraint Equal(IRelativeEquality equality);
+        LayoutConstraint Equal(Expression<LayoutSupport> expression);
+        LayoutConstraint Equal<T>(Expression<T> expression) where T : IRelativeEquality;
 
-        NSLayoutConstraint LessThanOrEqualTo(LayoutSupport support);
-        NSLayoutConstraint LessThanOrEqualTo(Expression<LayoutSupport> expression);
+        LayoutConstraint LessThanOrEqualTo(LayoutSupport support);
+        LayoutConstraint LessThanOrEqualTo(Expression<LayoutSupport> expression);
 
-        NSLayoutConstraint GreaterThanOrEqualTo(LayoutSupport support);
-        NSLayoutConstraint GreaterThanOrEqualTo(Expression<LayoutSupport> expression);
+        LayoutConstraint GreaterThanOrEqualTo(LayoutSupport support);
+        LayoutConstraint GreaterThanOrEqualTo(Expression<LayoutSupport> expression);
     }
 
     public interface INumericalEquality : IProperty
     {
-        NSLayoutConstraint Equal(nfloat value);
+        LayoutConstraint Equal(nfloat value);
     }
 
     public interface IRelativeInequality : IProperty
     {
-        NSLayoutConstraint LessThanOrEqualTo(IRelativeInequality inequality);
-        NSLayoutConstraint GreaterThanOrEqualTo(IRelativeInequality inequality);
+        LayoutConstraint LessThanOrEqualTo(IRelativeInequality inequality);
+        LayoutConstraint GreaterThanOrEqualTo(IRelativeInequality inequality);
     }
 
     public interface INumericalInequality : IProperty
     {
-        NSLayoutConstraint LessThanOrEqualTo(nfloat value);
-        NSLayoutConstraint GreaterThanOrEqualTo(nfloat value);
+        LayoutConstraint LessThanOrEqualTo(nfloat value);
+        LayoutConstraint GreaterThanOrEqualTo(nfloat value);
     }
 }

@@ -6,7 +6,7 @@
     <ProjectGuid>{03741220-B9B9-405D-927E-1EBE4C7083A7}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>UberDSL_Tests</RootNamespace>
+    <RootNamespace>UberDSLTests</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>UberDSLTests</AssemblyName>
   </PropertyGroup>
@@ -23,6 +23,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Developer: jairo.eog@outlook.com (689UD22BVS)</CodesignKey>
+    <CodesignProvision>iOS Team Provisioning Profile: com.tylerian.uberdsl.tests</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -46,8 +48,9 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: jairo.eog@outlook.com (689UD22BVS)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -91,6 +94,19 @@
     <Compile Include="Classes\Tests\AlignFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Entitlements.plist" />
+    <Compile Include="Classes\Tests\ConstraintGroupFixture.cs" />
+    <Compile Include="Classes\Tests\DimensionFixture.cs" />
+    <Compile Include="Classes\Tests\DistributeFixture.cs" />
+    <Compile Include="Classes\Tests\EdgeFixture.cs" />
+    <Compile Include="Classes\Tests\PriorityFixture.cs" />
+    <Compile Include="Classes\Tests\EdgesFixture.cs" />
+    <Compile Include="Classes\Tests\LayoutSupportFixture.cs" />
+    <Compile Include="Classes\Tests\MemoryLeakFixture.cs" />
+    <Compile Include="Classes\Tests\PointFixture.cs" />
+    <Compile Include="Classes\Tests\SizeFixture.cs" />
+    <Compile Include="Classes\Tests\ViewHierarchyFixture.cs" />
+    <Compile Include="Classes\Tests\Extra\TestView.cs" />
+    <Compile Include="Classes\Tests\Extra\TestWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
@@ -105,6 +121,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UberDSL\UberDSL.csproj">
+      <Project>{AC0B7A47-CEF7-4B6B-91D0-0860DFFC2EF8}</Project>
+      <Name>UberDSL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Tests\Extra\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
